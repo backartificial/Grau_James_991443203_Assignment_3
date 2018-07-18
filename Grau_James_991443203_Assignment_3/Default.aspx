@@ -23,7 +23,7 @@
                 
                 <div class="btn-group float-right" role="group">
                     <a href="Registration.aspx" class="btn btn-info">Register</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="btnLogin">Submit</button>
                 </div>
             </form>
         </div>
