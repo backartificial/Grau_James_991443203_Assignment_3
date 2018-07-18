@@ -8,20 +8,23 @@
         <link href="Content/custom.css" rel="stylesheet" />
     </head>
 
-    <body>
+    <body class="bg-dark">
         <div class="d-flex justify-content-center row">
-            <form id="loginForm" runat="server" class="col-lg-4">
+            <form id="loginForm" runat="server" class="col-lg-4 bg-light pt-2 pb-2 rounded">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username" runat="server" />
+                    <input type="text" class="form-control" id="username" placeholder="Username" runat="server" required autofocus />
                 </div>
             
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" runat="server" />
+                    <input type="password" class="form-control" id="password" placeholder="Password" runat="server" required />
                 </div>
-            
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                
+                <div class="btn-group float-right" role="group">
+                    <a href="Registration.aspx" class="btn btn-info">Register</a>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
 

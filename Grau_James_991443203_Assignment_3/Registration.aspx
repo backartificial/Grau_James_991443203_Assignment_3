@@ -10,7 +10,7 @@
 
     <body class="bg-dark">
         <div class="d-flex justify-content-center row">
-            <form id="loginForm" runat="server" class="col-lg-4 bg-light">
+            <form id="loginForm" runat="server" class="col-lg-4 bg-light pt-2 pb-2 rounded">
                 <h1>Customer Registration</h1>
 
                 <div class="modal-header">
