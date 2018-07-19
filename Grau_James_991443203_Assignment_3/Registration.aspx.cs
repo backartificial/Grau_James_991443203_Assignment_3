@@ -34,7 +34,7 @@ namespace Grau_James_991443203_Assignment_3 {
                             // Check to make sure that there is more than 0 returned users stored in the data table
                             if (count > 0) {
                                 // Display email not matching error
-                                registrationAccountErrors.InnerText = "Oops... That username is already taken.  Please try again.";
+                                registrationAccountErrors.InnerText = "Oops... That username is already taken.  Please try again.";                                
                                 registrationAccountErrors.Attributes.Add("class", registrationAccountErrors.Attributes["class"].Replace("d-none", ""));
 
                                 // Return out of validation

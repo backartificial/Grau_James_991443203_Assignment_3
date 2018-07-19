@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Registration.aspx.cs" Inherits="Grau_James_991443203_Assignment_3.Registration" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Grau_James_991443203_Assignment_3.Profile" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,13 +10,15 @@
 
     <body class="bg-dark">
         <div class="d-flex justify-content-center row">
-            <form id="loginForm" runat="server" class="col-lg-4 bg-light pt-2 pb-2 rounded">
+            <form id="profile" runat="server" class="col-lg-4 bg-light pt-2 pb-2 rounded">
                 <div class="modal-header">
                     <h5 class="modal-title">Sheridan Car Sales</h5>
                 </div>
-
-                <br />
-
+                
+                <%= Session["id"] %>
+                <%= Session["name"] %>
+                <%= Session["username"] %>
+                
                 <div class="form-group">
                     <label for="brand">Brand</label>
                     <input type="text" class="form-control" id="brand" placeholder="Brand" runat="server" />

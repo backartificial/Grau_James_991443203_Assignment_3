@@ -38,12 +38,14 @@ namespace Grau_James_991443203_Assignment_3 {
                                 loginErrors.Attributes.Add("class", loginErrors.Attributes["class"].Replace("alert-danger", "alert-success"));
                                 loginErrors.Attributes.Add("class", loginErrors.Attributes["class"].Replace("d-none", ""));
 
-                                // Create the session
-                                Session.Add("signedIn", true);
+                                // Create the session variables
+                                Session.Add("signedIn", "True");
+                                Session.Add("id", reader["id"].ToString());
+                                Session.Add("name", reader["name"].ToString());
+                                Session.Add("username", reader["username"].ToString());
 
                                 // Move to the profile page
-                                Response.Write("Password Matches");
-                                Response.Write(Session["signedIn"]);
+                                Response.Redirect("Profile.aspx");
                             } else {
                                 // Display error message
                                 loginErrors.InnerText = "Oops... Your username/password cannot be validated.  Please try again.";
@@ -59,7 +61,7 @@ namespace Grau_James_991443203_Assignment_3 {
                 } catch (Exception ex) {
                     // Print Connection Error to DB
                     // Display error message
-                    loginErrors.InnerText = "Oops...  Looks like something went wrong.  Please try again.";
+                    loginErrors.InnerText = "Oops...  Looks like something went wrong.  Please try again. (" + ex.Message + ")";
                     loginErrors.Attributes.Add("class", "alert alert-danger");
                     loginErrors.Attributes.Add("class", loginErrors.Attributes["class"].Replace("d-none", ""));
                 } finally {
