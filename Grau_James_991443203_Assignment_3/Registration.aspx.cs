@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Grau_James_991443203_Assignment_3 {
     public partial class Registration : System.Web.UI.Page {
@@ -34,11 +29,10 @@ namespace Grau_James_991443203_Assignment_3 {
                             SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM dbo.Customers WHERE username = @username", connection);
                             command.Parameters.AddWithValue("@username", frmData["username"]);
 
-                            // Execute the query and get the result(s)
-                            SqlDataReader reader = command.ExecuteReader();
+                            Int32 count = (Int32)command.ExecuteScalar();
 
                             // Check to make sure that there is more than 0 returned users stored in the data table
-                            if (reader.HasRows) {
+                            if (count > 0) {
                                 // Display email not matching error
                                 registrationAccountErrors.InnerText = "Oops... That username is already taken.  Please try again.";
                                 registrationAccountErrors.Attributes.Add("class", registrationAccountErrors.Attributes["class"].Replace("d-none", ""));
@@ -48,7 +42,11 @@ namespace Grau_James_991443203_Assignment_3 {
                             }
                         } catch(Exception ex) {
                             // Print Connection Error to DB
-                            Response.Write("Error in connection ! ---- " + ex.Message);
+                            // Display error message
+                            registrationSuccess.InnerText = "Oops...  Looks like something went wrong.  Please try again. (" + ex.Message + ")";
+                            registrationSuccess.Attributes.Add("class", "alert alert-danger");
+                            registrationSuccess.Attributes.Add("class", registrationSuccess.Attributes["class"].Replace("d-none", ""));
+                            registrationSuccess.Attributes.Add("class", registrationSuccess.Attributes["class"].Replace("success", "danger"));
                         } finally {
                             // Close the connection to the database
                             connection.Close();
@@ -78,8 +76,12 @@ namespace Grau_James_991443203_Assignment_3 {
                             registrationAccountErrors.Attributes.Add("class", "d-none");
                         }catch(Exception ex) {
                             // Print Connection Error to DB
-                            Response.Write("Error in connection ! ---- " + ex.Message);
-                        }finally{
+                            // Display error message
+                            registrationSuccess.InnerText = "Oops...  Looks like something went wrong.  Please try again. (" + ex.Message + ")";
+                            registrationSuccess.Attributes.Add("class", "alert alert-danger");
+                            registrationSuccess.Attributes.Add("class", registrationSuccess.Attributes["class"].Replace("d-none", ""));
+                            registrationSuccess.Attributes.Add("class", registrationSuccess.Attributes["class"].Replace("success", "danger"));
+                        } finally{
                             // Close the connection to the database
                             connection.Close();
                         }

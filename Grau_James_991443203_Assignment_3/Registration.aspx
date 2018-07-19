@@ -15,7 +15,7 @@
 
                 <div runat="server" id="registrationSuccess" class="mt-2 mb-2 alert alert-success d-none">Success! You have been successfully registered! You can now <a href="Default.aspx">login!</a></div>
 
-                <div class="modal-header">
+                <div class="modal-header mb-2">
                     <h5 class="modal-title">Personal Information</h5>
                 </div>
                 
@@ -41,7 +41,7 @@
                     <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" runat="server" pattern="^(\(|)\d{3}(\)|)([\-]| )\d{3}([\-]| )\d{4}$" title="Format: (123-123-1234) or ((123) 123-1234)" required />
                 </div>
 
-                <div class="modal-header">
+                <div class="modal-header mb-2">
                     <h5 class="modal-title">Account Information</h5>
                 </div>
 
