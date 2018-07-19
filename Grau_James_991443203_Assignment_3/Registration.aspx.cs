@@ -22,9 +22,37 @@ namespace Grau_James_991443203_Assignment_3 {
                         // Take the entered password and hash it using SHA-512
                         string passwordHash = (BitConverter.ToString(new System.Security.Cryptography.SHA512Managed().ComputeHash(System.Text.Encoding.UTF8.GetBytes(frmData["password"]))).Replace("-", "").ToLower()).ToString();
 
-                        // Set the needed DB variables
-                        string connectionString = "Data Source=JAMES-SHERIDAN-\\JAMESGRAUSQLSERV;Initial Catalog=CarSalesDB;Integrated Security=SSPI;Persist Security Info=False";
-                        SqlConnection connection = new SqlConnection(connectionString);
+                        // Set the database connection instance
+                        SqlConnection connection = new SqlConnection(Properties.Settings.Default.DBConnectionString);
+
+                        // Try and check to make sure that, that user name is not taken
+                        try {
+                            // Open the connection to the DB
+                            connection.Open();
+
+                            // Create and set the needed variables
+                            SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM dbo.Customers WHERE username = @username", connection);
+                            command.Parameters.AddWithValue("@username", frmData["username"]);
+
+                            // Execute the query and get the result(s)
+                            SqlDataReader reader = command.ExecuteReader();
+
+                            // Check to make sure that there is more than 0 returned users stored in the data table
+                            if (reader.HasRows) {
+                                // Display email not matching error
+                                registrationAccountErrors.InnerText = "Oops... That username is already taken.  Please try again.";
+                                registrationAccountErrors.Attributes.Add("class", registrationAccountErrors.Attributes["class"].Replace("d-none", ""));
+
+                                // Return out of validation
+                                return;
+                            }
+                        } catch(Exception ex) {
+                            // Print Connection Error to DB
+                            Response.Write("Error in connection ! ---- " + ex.Message);
+                        } finally {
+                            // Close the connection to the database
+                            connection.Close();
+                        }
 
                         // Try and connection to the DB
                         try {
@@ -51,6 +79,9 @@ namespace Grau_James_991443203_Assignment_3 {
                         }catch(Exception ex) {
                             // Print Connection Error to DB
                             Response.Write("Error in connection ! ---- " + ex.Message);
+                        }finally{
+                            // Close the connection to the database
+                            connection.Close();
                         }
 
                         // Close the connection to the DB

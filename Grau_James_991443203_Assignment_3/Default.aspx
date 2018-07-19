@@ -11,11 +11,11 @@
     <body class="bg-dark">
         <div class="d-flex justify-content-center row">
             <form id="loginForm" runat="server" class="col-lg-4 bg-light pt-2 pb-2 rounded">
-                <div class="modal-header">
+                <div class="modal-header mb-2">
                     <h5 class="modal-title">Login | Sheridan Cars</h5>
                 </div>
 
-                <div runat="server" id="loginErrors" class="mt-2 mb-2 alert alert-danger d-none"></div>
+                <div runat="server" id="loginErrors" class="mb-2 alert alert-danger d-none"></div>
                 
                 <div class="form-group">
                     <label for="username">Username</label>

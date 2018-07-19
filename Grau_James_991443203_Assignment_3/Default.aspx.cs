@@ -8,10 +8,11 @@ namespace Grau_James_991443203_Assignment_3 {
         protected void Page_Load(object sender, EventArgs e) {
             // Check if the page is being posted to
             if(IsPostBack) {
-                // Set the needed variables
+                // Store the form data into a collection
                 System.Collections.Specialized.NameValueCollection frmData = Request.Form;
-                string connectionString = "Data Source=JAMES-SHERIDAN-\\JAMESGRAUSQLSERV;Initial Catalog=CarSalesDB;Integrated Security=SSPI;Persist Security Info=False";
-                SqlConnection connection = new SqlConnection(connectionString);
+
+                // Set the database connection instance
+                SqlConnection connection = new SqlConnection(Properties.Settings.Default.DBConnectionString);
 
                 // Try and connection to the DB
                 try {
@@ -26,7 +27,7 @@ namespace Grau_James_991443203_Assignment_3 {
                     SqlDataReader reader = command.ExecuteReader();
 
                     // Check to make sure that there is more than 0 returned users stored in the data table
-                    if(reader.HasRows) {
+                    if (reader.HasRows) {
                         // Check to make sure that the returned row has data
                         if (reader.Read()) {
                             // Take the entered password and hash it using SHA-512
@@ -51,13 +52,18 @@ namespace Grau_James_991443203_Assignment_3 {
                                 loginErrors.Attributes.Add("class", loginErrors.Attributes["class"].Replace("d-none", ""));
                             }
                         }
+                    } else {
+                        // Display error message
+                        loginErrors.InnerText = "Oops...  Looks like that account is not registered.  You can go ahead and register that account!";
+                        loginErrors.Attributes.Add("class", "alert alert-danger");
+                        loginErrors.Attributes.Add("class", loginErrors.Attributes["class"].Replace("d-none", ""));
                     }
-
-                    // Close the DB Connection
-                    connection.Close();
                 } catch (Exception ex) {
                     // Print Connection Error to DB
                     Response.Write("Error in connection ! ---- " + ex.Message);
+                } finally {
+                    // Close the DB Connection
+                    connection.Close();
                 }
             }
         }
