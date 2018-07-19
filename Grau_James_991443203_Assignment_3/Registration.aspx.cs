@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,7 +9,63 @@ using System.Web.UI.WebControls;
 namespace Grau_James_991443203_Assignment_3 {
     public partial class Registration : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if the page is being posted to
+            if(IsPostBack) {
+                // Store the form data into an array
+                System.Collections.Specialized.NameValueCollection frmData = Request.Form;
 
+                // Perform needed checks
+                // Check if the entered email addresses match
+                if(frmData["email"].ToLower().Equals(frmData["emailConfirm"].ToLower())) {
+                    // Check if the entered passwords match
+                    if (frmData["password"].Equals(frmData["passwordConfirm"])) {
+                        // Take the entered password and hash it using SHA-512
+                        string passwordHash = (BitConverter.ToString(new System.Security.Cryptography.SHA512Managed().ComputeHash(System.Text.Encoding.UTF8.GetBytes(frmData["password"]))).Replace("-", "").ToLower()).ToString();
+
+                        // Set the needed DB variables
+                        string connectionString = "Data Source=JAMES-SHERIDAN-\\JAMESGRAUSQLSERV;Initial Catalog=CarSalesDB;Integrated Security=SSPI;Persist Security Info=False";
+                        SqlConnection connection = new SqlConnection(connectionString);
+
+                        // Try and connection to the DB
+                        try {
+                            // Open the connection to the DB
+                            connection.Open();
+
+                            // Create and set the needed variables
+                            SqlCommand command = new SqlCommand("INSERT INTO dbo.Customers (username, email, password, name, address, postalCode, phoneNumber) VALUES (@username, @email, @password, @name, @address, @postalcode, @phoneNumber)", connection);
+                            command.Parameters.AddWithValue("@username", frmData["username"]);
+                            command.Parameters.AddWithValue("@email", frmData["email"]);
+                            command.Parameters.AddWithValue("@password", passwordHash);
+                            command.Parameters.AddWithValue("@name", frmData["name"]);
+                            command.Parameters.AddWithValue("@address", frmData["address"]);
+                            command.Parameters.AddWithValue("@postalCode", frmData["postalCode"]);
+                            command.Parameters.AddWithValue("@phoneNumber", frmData["phoneNumber"]);
+
+                            // Execute the query and insert into the database
+                            command.ExecuteNonQuery();
+
+                            // Display the success Message and hide any error messages
+                            registrationSuccess.Attributes.Add("class", registrationSuccess.Attributes["class"].Replace("d-none", ""));
+                            registrationPersonalErrors.Attributes.Add("class", "d-none");
+                            registrationAccountErrors.Attributes.Add("class", "d-none");
+                        }catch(Exception ex) {
+                            // Print Connection Error to DB
+                            Response.Write("Error in connection ! ---- " + ex.Message);
+                        }
+
+                        // Close the connection to the DB
+                        connection.Close();
+                    } else{
+                        // Display password not matching error
+                        registrationAccountErrors.InnerText = "Oops... The passwords you've entered do not match.  Please try again.";
+                        registrationAccountErrors.Attributes.Add("class", registrationAccountErrors.Attributes["class"].Replace("d-none", ""));
+                    }
+                }else{
+                    // Display email not matching error
+                    registrationAccountErrors.InnerText = "Oops... The email address you've entered do not match.  Please try again.";
+                    registrationAccountErrors.Attributes.Add("class", registrationAccountErrors.Attributes["class"].Replace("d-none", ""));
+                }
+            }
         }
     }
 }
