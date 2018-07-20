@@ -1,9 +1,20 @@
-﻿using System;
+﻿
+// Include the needed packages
+using System;
 using System.Data.SqlClient;
 
+// This is the name space at which this file resides
 namespace Grau_James_991443203_Assignment_3 {
+    // This the the Default pages class
     public partial class Default : System.Web.UI.Page {
+        // This method is performed when the page is loaded
         protected void Page_Load(object sender, EventArgs e) {
+            // Check if there is a set session
+            if(Session["signedIn"] != null && Session["signedIn"].Equals("True")) {
+                // Redirect the user to the profile page
+                Response.Redirect("Profile.aspx");
+            }
+
             // Check if the page is being posted to
             if(IsPostBack) {
                 // Store the form data into a collection
@@ -43,6 +54,10 @@ namespace Grau_James_991443203_Assignment_3 {
                                 Session.Add("id", reader["id"].ToString());
                                 Session.Add("name", reader["name"].ToString());
                                 Session.Add("username", reader["username"].ToString());
+                                Session.Add("email", reader["email"].ToString());
+                                Session.Add("phoneNumber", reader["phoneNumber"].ToString());
+                                Session.Add("address", reader["address"].ToString());
+                                Session.Add("postalCode", reader["postalCode"].ToString());
 
                                 // Move to the profile page
                                 Response.Redirect("Profile.aspx");
