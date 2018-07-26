@@ -59,11 +59,7 @@ namespace Grau_James_991443203_Assignment_3 {
                 }
             }
 
-
-
-
-
-            // Try and check to make sure that, that user name is not taken
+            // Try and connect and get all customer orders
             try {
                 // Open the connection to the DB
                 connection.Open();
@@ -72,21 +68,33 @@ namespace Grau_James_991443203_Assignment_3 {
                 SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM dbo.ORDERS WHERE customer = @id", connection);
                 command.Parameters.AddWithValue("@id", Session["id"]);
 
+                // Store the count of returned items
                 Int32 count = (Int32)command.ExecuteScalar();
 
-                // Check to make sure that there is more than 0 returned users stored in the data table
+                // Check to make sure that there is more than 0 returned orders stored in the data table
                 if (count > 0) {
+                    // Set the command to a new SQL Query and bind the customers id
                     command = new SqlCommand("SELECT * FROM dbo.ORDERS WHERE customer = @id", connection);
                     command.Parameters.AddWithValue("@id", Session["id"]);
 
-                    using (SqlDataReader rdr = command.ExecuteReader()) {
-                        while (rdr.Read()) {
-                            previousOrders.InnerHtml = previousOrders.InnerHtml + "<li class='list-group-item'>" + rdr["id"] + "</li>";
+                    // Using the reader, perform the writing of data
+                    using (SqlDataReader reader = command.ExecuteReader()) {
+                        // Clear the list of Previous Orders
+                        previousOrders.InnerHtml = "";
+
+                        // Loop through each returned item and add it to the list
+                        while (reader.Read()) {
+                            // Append the list item to the list
+                            previousOrders.InnerHtml = previousOrders.InnerHtml + "<div class='list-group-item flex-column align-items-start'><div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>" + reader["year"] + " " + reader["brand"] + " " + reader["model"] + " ($" + Math.Round(double.Parse(reader["price"].ToString()), 2) + ") - " + reader["color"] + "</h5><time class='timeago' datetime='" + DateTime.Parse(reader["orderdate"].ToString()) + "'>" + DateTime.Parse(reader["orderdate"].ToString()) + "</time><small></small></div></div>";
                         }
                     }
+                }else{
+                    // Add the message to display customer has no previous orders
+                    previousOrders.InnerHtml = "<div class='list-group-item flex-column align-items-start'><div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>Oops... You don't have any Previous Orders.</h5></div></div>";
                 }
             } catch (Exception ex) {
-                previousOrders.InnerHtml = "<li class='list-group-item'>You don't have any Previous Orders</li>";
+                // Display error message
+                previousOrders.InnerHtml = "<div class='list-group-item flex-column align-items-start'><div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>Oops... Something happened. Please try again later (" + ex.Message + ").</h5></div></div>";
             } finally {
                 // Close the connection to the database
                 connection.Close();

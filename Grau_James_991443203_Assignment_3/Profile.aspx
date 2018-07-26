@@ -22,7 +22,7 @@
         <div class="container-flex">
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="bg-light pt-1 pr-2 pb-1 pl-2 h-100">
+                    <div class="bg-light pt-1 pr-2 pl-2">
                         <div class="modal-header pb-1 mb-2">
                             <h5 class="modal-title">Account Information</h5>
                         </div>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="bg-light pt-1 pr-2 pb-1 pl-2 h-100">
+                    <div class="bg-light pt-1 pr-2 pb-2 pl-2">
                         <form id="placeOrder" runat="server" class="bg-light">
                             <div class="modal-header pb-1 mb-2">
                                 <h5 class="modal-title">Place an Order</h5>
@@ -107,7 +107,7 @@
                             <h5 class="modal-title">Previous Orders</h5>
                         </div>
 
-                        <ul class="list-group" id="previousOrders" runat="server"></ul>
+                        <div class="list-group list-group-flush" id="previousOrders" runat="server"></div>
                     </div>
                 </div>
             </div>
@@ -116,5 +116,12 @@
         <script src="Scripts/jquery-3.0.0.js"></script>
         <script src="Scripts/popper.js"></script>
         <script src="Scripts/bootstrap.js"></script>
+        <script src="Scripts/timeago.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("time.timeago").timeago();
+            });
+        </script>
     </body>
 </html>
