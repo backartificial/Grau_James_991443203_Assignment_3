@@ -13,13 +13,22 @@ namespace Grau_James_991443203_Assignment_3 {
     public partial class Profile {
         
         /// <summary>
-        /// profile control.
+        /// placeOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm profile;
+        protected global::System.Web.UI.HtmlControls.HtmlForm placeOrder;
+        
+        /// <summary>
+        /// placeOrderErrors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl placeOrderErrors;
         
         /// <summary>
         /// brand control.
@@ -56,5 +65,14 @@ namespace Grau_James_991443203_Assignment_3 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl price;
+        
+        /// <summary>
+        /// previousOrders control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl previousOrders;
     }
 }

@@ -44,26 +44,28 @@
 
                 <div class="col-lg-4">
                     <div class="bg-light pt-1 pr-2 pb-1 pl-2 h-100">
-                        <form id="profile" runat="server" class="bg-light">
+                        <form id="placeOrder" runat="server" class="bg-light">
                             <div class="modal-header pb-1 mb-2">
-                                <h5 class="modal-title">Sheridan Car Sales</h5>
+                                <h5 class="modal-title">Place an Order</h5>
                             </div>
+
+                            <div runat="server" id="placeOrderErrors" class="mb-2 alert alert-danger d-none"></div>
                 
                             <div class="row">
                                 <div class="form-group col-lg-6">
                                     <label for="brand">Brand</label>
-                                    <input type="text" class="form-control" id="brand" placeholder="Brand" runat="server" autofocus />
+                                    <input type="text" class="form-control" id="brand" placeholder="Brand" runat="server" required autofocus />
                                 </div>
 
                                 <div class="form-group col-lg-6">
                                     <label for="model">Model</label>
-                                    <input type="text" class="form-control" id="model" placeholder="Model" runat="server" />
+                                    <input type="text" class="form-control" id="model" placeholder="Model" runat="server" required />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="year">Year</label>
-                                <select name="year" class="custom-select" required>
+                                <select name="year" class="custom-select" id="year" required>
                                     <option selected disabled>Select Year</option>
 
                                     <% for(int i = (DateTime.Now.Year + 1); i >= 1886 ; i--) %>
@@ -74,7 +76,7 @@
                             <div class="row">
                                 <div class="form-group col-lg-6">
                                     <label for="color">Color</label>
-                                    <input type="text" class="form-control" id="color" placeholder="Color" runat="server" />
+                                    <input type="text" class="form-control" id="color" placeholder="Color" runat="server" required />
                                 </div>
 
                                 <div class="form-group col-lg-6">
@@ -85,14 +87,14 @@
                                             <span class="input-group-text">$</span>
                                         </div>
 
-                                        <input type="number" class="form-control" id="price" min="0" step="0.01" placeholder="Price" runat="server" />
+                                        <input type="number" class="form-control" id="price" min="0" step="0.01" placeholder="Price" runat="server" required />
                                     </div>
                                 </div>
                             </div>
             
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-success float-right mb-2">Register</button>
+                                    <button type="submit" class="btn btn-info float-right mb-2" id="placeOrderSubmit">Place Order</button>
                                 </div>
                             </div>
                         </form>
@@ -102,16 +104,10 @@
                 <div class="col-lg-4 pr-2 pl-2">
                     <div class="bg-light pt-1 pr-2 pb-1 pl-2 h-100">
                         <div class="modal-header pb-1 mb-2">
-                            <h5 class="modal-title">Previous Order(s)</h5>
+                            <h5 class="modal-title">Previous Orders</h5>
                         </div>
 
-                        <ul class="list-group">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
+                        <ul class="list-group" id="previousOrders" runat="server"></ul>
                     </div>
                 </div>
             </div>
